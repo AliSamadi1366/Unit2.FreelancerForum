@@ -37,31 +37,20 @@ let rateaverage = rateAverage(freelancers);
 // Write a component function to represent a single freelancer.
 function FreeLancerRow(freelancer) {
   const { name, occupation, rate } = freelancer;
-  const $row = document.createElement("tr");
-  $row.innerHTML = `
+  const $tr = document.createElement("tr");
+  $tr.innerHTML = `
     <td>${name}</td>
     <td>${occupation}</td>
     <td>${rate}</td>
     `;
-  return $row;
+  return $tr;
 }
 //Write a component function to represent an array of freelancers.
 function FreeLancerRows() {
-  const $table = document.createElement("table");
-  $table.classList.add("tfreelancers");
-  $table.innerHTML = `
-  <thead>
-    <tr>
-        <th>Name</th>
-        <th>Occupation</th>
-        <th>Rate</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-  `;
-  const $rows = freelancers.map(FreeLancerRow);
-  $table.replaceChildren(...$rows);
-  return $table;
+  const $tbody = document.createElement("tbody");
+  const $freelancers = freelancers.map(FreeLancerRow);
+  $tbody.replaceChildren(...$freelancers);
+  return $tbody;
 }
 //Write a component function to represent the average rate of all freelancers.
 function AverageRate() {
@@ -76,11 +65,20 @@ function AverageRate() {
 function render() {
   const $app = document.querySelector("#app");
   $app.innerHTML = `
-    <h1>Freelancer Forum</h1>
+    <h1>"Freelancer Forum"</h1>
     <AverageRate></AverageRate>
-    <FreeLancerRows></FreeLancerRows>
+    <table>
+      <thead>
+        <tr>
+         <th>Name</th>
+         <th>Occupation</th>
+         <th>Rate</th>
+        </tr>
+      </thead>
+      <tbody id="FreeLancerRows"></tbody>
+    </table>
     `;
   $app.querySelector("AverageRate").replaceWith(AverageRate());
-  $app.querySelector("FreeLancerRows").replaceWith(FreeLancerRows());
+  $app.querySelector("#FreeLancerRows").replaceWith(FreeLancerRows());
 }
 render();
