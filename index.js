@@ -24,9 +24,39 @@ let freelancers = Array.from({ length: NUM_FREELANCERS }, makeFreelancer);
 function rateAverage(freelancers) {
   let total = 0;
   for (const freelancer of freelancers) {
-    
+
     total += freelancer.rate;
   }
   return total / freelancers.length;
 }
-console.log(rateAverage(freelancers))
+//Use that function to initialize a state variable which will store the average rate of all freelancers
+let rateaverage = rateAverage(freelancers);
+// === component ===
+// Write a component function to represent a single freelancer.
+function FreeLancerRow (freelancer) {
+    const {name, occupation, rate} = freelancer;
+    const $row = document.createElement("article");
+    $row.classList.add("row");
+    $row.innerHTML = `
+    <p class="freelancerinfo">${name} ${occupation} ${rate}</p>
+    `;
+    return $row;
+}
+//Write a component function to represent an array of freelancers.
+function FreeLancerRows () {
+    const $container = document.createElement("article");
+    $container.classList.add("rows")
+    const $rows = freelancers.map(FreeLancerRow);
+    $container.replaceChildren(...$rows);
+    return $container;
+
+}
+//Write a component function to represent the average rate of all freelancers.
+function AverageRate () {
+    const $figcaption = document.createElement("article");
+    $figcaption.classList.add("text")
+    $figcaption.innerHTML = `
+    <p> The average is ${rateaverage}</p>
+    `;
+    return $figcaption;
+}
